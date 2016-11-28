@@ -28,11 +28,12 @@ public class OnBoot extends BroadcastReceiver {
         }
         if(!mSetupRunning) {
             SharedPreferences sharedpreferences = context.getSharedPreferences("selinux_pref", Context.MODE_PRIVATE);
-            String isSelinuxEnforcing = sharedpreferences.getString("selinux", null);
-            if (isSelinuxEnforcing != null) {
-                if (isSelinuxEnforcing.equals("true")) {
-                    CMDProcessor.runShellCommand("setenforce 1");
-                } else if (isSelinuxEnforcing.equals("false")) {
+            String isUserSelinuxEnforcing = sharedpreferences.getString("selinux", null);
+            boolean isSelinuxEnforcing = CMDProcessor.runShellCommand("getenforce").getStdOut().contains("Enforcing");
+            if (isUserSelinuxEnforcing != null) {
+                if (isUserSelinuxEnforcing.equals("true") && !isSelinuxEnforcing) {
+                    CMDProcessor.runSuCommand("setenforce 1");
+                } else if (isUserSelinuxEnforcing.equals("false") && isSelinuxEnforcing) {
                     CMDProcessor.runSuCommand("setenforce 0");
                 }
             } else {
