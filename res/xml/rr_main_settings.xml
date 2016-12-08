@@ -88,8 +88,8 @@
                 android:title="@string/updater_title"
                 android:icon="@drawable/ic_rr_updates_tint">
             <intent android:action="android.intent.action.MAIN"
-                    android:targetPackage="com.rr.ota"
-                    android:targetClass="com.rr.center.OTACenter" />
+                    android:targetPackage="com.fusionjack.slimota"
+                    android:targetClass="com.fusionjack.slimota.MainActivity" />
         </PreferenceScreen>                
 
 </PreferenceCategory>
